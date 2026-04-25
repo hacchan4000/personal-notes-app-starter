@@ -15,6 +15,7 @@ export const AuthProvider = ( { children }: { children: ReactNode }) => {
   const nav = useNavigate()
   const [loading, setLoading] = useState(false)
   const [user, setUser] = useState(null)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   const login = async (email: string, pass: string) => {
     try {
@@ -37,7 +38,7 @@ export const AuthProvider = ( { children }: { children: ReactNode }) => {
       } else {
         alert('token g ketemu')
       }
-      
+
     } catch (error) {
       console.error(error)
       alert('Something went wrong')
