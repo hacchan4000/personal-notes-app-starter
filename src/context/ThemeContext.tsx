@@ -1,4 +1,4 @@
-import React, { Children, ReactNode, useMemo, useState } from 'react';
+import React, { Children, ReactNode, useEffect, useMemo, useState } from 'react';
 
 
 type ThemeContextType = {
@@ -8,20 +8,24 @@ type ThemeContextType = {
 export const ThemeContext = React.createContext<ThemeContextType | null>(null);
 
 export const ThemeProvider = ( { children }: { children: ReactNode } ) => {
-  const [theme, setTheme] = useState<'light' | 'dark'>('dark')
+  const [theme, setTheme] = useState<any>(() => {
+    return localStorage.getItem('theme') || 'light'
+  })
 
   const toggleTheme = () => {
-    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))
+    setTheme((prev: string) => {
+      const newTheme = prev === 'light' ? 'dark' : 'light'
+      localStorage.setItem('theme', newTheme)
+      return newTheme
+    })
   }
-  const val = useMemo(()=>{
-    return {
-      theme, 
-      toggleTheme
-    }
-  },[theme])
+  useEffect(() => {
+    document.body.className = theme
+  }, [theme])
+  
 
   return (
-    <ThemeContext.Provider value={val}>
+    <ThemeContext.Provider value={{theme, toggleTheme}}>
       {children}
     </ThemeContext.Provider>
   )

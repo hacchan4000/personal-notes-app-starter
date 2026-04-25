@@ -18,11 +18,15 @@ function App() {
       <Header/>
       <main>
         <Routes>
-          <Route path='/' element={<PublicRoute><LoginForm /></PublicRoute>
-            
+          <Route path='/' element={
+            <PublicRoute>
+              <LoginForm />
+            </PublicRoute>
             } />
-          <Route path='/register' element={<PublicRoute><RegisterForm /></PublicRoute>
-            
+          <Route path='/register' element={
+            <PublicRoute>
+              <RegisterForm />
+            </PublicRoute>
             } />
           
           <Route path="/home" element={ 
