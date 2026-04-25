@@ -1,0 +1,27 @@
+import React from 'react'
+import NoteItem from './NoteItem'
+import { showFormattedDate } from '../utils'
+import { useLocation } from 'react-router-dom'
+
+
+const NoteList = ({notes}) => {
+  const lokasi = useLocation()
+  const currNotes = lokasi.pathname === '/home'
+  ? notes.filter((note) => !note.archived)
+  : notes.filter((note) => note.archived);
+
+  return (
+    <>
+    {currNotes.map((item)=>(
+      <NoteItem 
+      id={item.id} 
+      title={item.title} 
+      body={item.body} 
+      archived={item.archived} 
+      createdAt={showFormattedDate(item.createdAt)}/>
+    ))}
+    </>
+  )
+}
+
+export default NoteList
