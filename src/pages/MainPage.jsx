@@ -1,8 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import NoteList from '../components/NoteList';
-import { getAllNotes } from '../utils/local-data';
-import { NotesContext } from '../context/NotesContext';
 import { useNotes } from '../hooks/useNotes';
 import { useLanguage } from '../hooks/useLanguage';
 
@@ -10,8 +8,8 @@ import { useLanguage } from '../hooks/useLanguage';
 const MainPage = ({ type }) => {
   const nav = useNavigate()
   const [search, setSearch] = useState('')
-  const {notes, setNotes} = useNotes()
-  const filteredNotes = notes.filter(item => item.title.toLowerCase().includes(search))
+  const {notes, setNotes, refreshNotes} = useNotes()
+  const filteredNotes = notes.filter(item => item.title.toLowerCase().includes(search.toLowerCase()))
 
   const { bahasa } = useLanguage()
   return (

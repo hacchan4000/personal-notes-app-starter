@@ -25,7 +25,7 @@ async function addNote({title, body}) {
   return { error: result.error, data: result.data }
 }
 async function archiveNote(id) {
-  const result = Request(`notes/${id}/archive`, { method:"POST", token:true})
+  const result = await Request(`notes/${id}/archive`, { method:"POST", token:true})
   return { error: result.error, data: result.data }
 }
 async function deleteNote(id) {
@@ -44,9 +44,11 @@ async function getActiveNote() {
   return { error: result.error, data: result.data }
 }
 async function getArchivedNote() {
-  const result = await Request(`notes/archived`)
-
-  return { error: result.error, data: result.data }
+  const result = await Request(`notes/archived`, {
+    method: "GET",
+    token: true,
+  })
+  return result
 }
 async function unArchiveNote(id) {
   const result = await Request(`notes/${id}/unarchive`, {method:"POST",token:true})
