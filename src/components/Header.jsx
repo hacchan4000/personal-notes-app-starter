@@ -34,7 +34,11 @@ const Header = () => {
       </button>
       {lokasi.pathname!=='/' ? (
         <button className="button-logout" type="button" onClick={logout}>
-        <ion-icon size={"large"} name="log-out-outline"></ion-icon> {user?.name}
+        <ion-icon size={"large"} name="log-out-outline"></ion-icon> {user && (
+  <p className="user-info">
+    {user.name} 
+  </p>
+)}
       </button>
       ):''}
       

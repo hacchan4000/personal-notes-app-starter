@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import { getUserLogged, Login } from '../utils/services';
 import { useNavigate } from 'react-router-dom';
 
@@ -30,10 +30,6 @@ export const AuthProvider = ( { children }: { children: ReactNode }) => {
 
       if (token) {
         localStorage.setItem('AccessToken', token)
-        const myUser = await getUserLogged()
-        if (!myUser.error) {
-          setUser(myUser.data)
-        }
         nav('/home')
       } else {
         alert('token g ketemu')
@@ -57,6 +53,21 @@ export const AuthProvider = ( { children }: { children: ReactNode }) => {
     return localStorage.getItem('AccessToken')
   }
   
+  useEffect(() => {
+  const fetchUser = async () => {
+    const token = localStorage.getItem('AccessToken')
+    if (!token) return
+
+    const res = await getUserLogged()
+    if (!res.error) {
+      setUser(res.data)
+      setIsAuthenticated(true)
+    }
+  }
+
+  fetchUser()
+}, [])
+
   return (
     <AuthContext.Provider value={{loading, login, logout, getToken, user}}>
       {children}

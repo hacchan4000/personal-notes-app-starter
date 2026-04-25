@@ -28,8 +28,15 @@ const MainPage = ({ type }) => {
         onChange={(e)=> {setSearch(e.target.value)}}
         />
       </section>
+      
       <section className='notes-list'>
-        <NoteList notes={filteredNotes} type={type}/>
+        {filteredNotes.length > 0 ? (<NoteList notes={filteredNotes} type={type}/>) : (
+          <p>
+            {bahasa === 'id'
+              ? 'Tidak ada catatan'
+              : 'No notes available'}
+          </p>
+        )}
       </section>
       <div className='homepage__action'>
         <button className='action' title='Tambah' type='button' onClick={()=>nav('/notes/new')}>
